@@ -3,6 +3,6 @@
   "compilerOptions": {
     "outDir": "dist"
   },
-  "include": ["main.ts", "routes/*.ts"],
+  "include": ["main.ts"],
   "exclude": ["node_modules"]
 }

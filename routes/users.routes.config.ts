@@ -1,4 +1,6 @@
 import { BaseRoutesConfig } from "./base.routes.config";
+import { getUser } from "../controllers/users.controller";
+
 import express from "express";
 
 export class UsersRoutes extends BaseRoutesConfig {
@@ -24,7 +26,13 @@ export class UsersRoutes extends BaseRoutesConfig {
         next();
       })
       .get((req: express.Request, res: express.Response) => {
-        res.status(200).send(`GET requested for id ${req.params.userId}`);
+        const userId = Number(req.params.userId) || 0;
+        if (userId > 0) {
+          res.json(getUser(userId));
+        } else {
+          res.status(404).send(`User id not found`);
+        }
+        //        res.status(200).send(`GET requested for id ${req.params.userId}`);
       })
       .put((req: express.Request, res: express.Response) => {
         res.status(200).send(`PUT requested for id ${req.params.userId}`);
