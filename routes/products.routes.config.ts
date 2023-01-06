@@ -1,6 +1,9 @@
-import { BaseRoutesConfig } from "./base.routes.config";
-import { getManyProducts } from "../services/products.service";
 import express from "express";
+import debug from "debug";
+import path from "path";
+import { BaseRoutesConfig } from "./base.routes.config";
+import { getProduct, getManyProducts } from "../controllers/products.controller";
+const log: debug.IDebugger = debug(`app:${path.parse(__filename).name}`);
 
 export class ProductsRoutes extends BaseRoutesConfig {
   constructor(app: express.Application) {
@@ -10,7 +13,8 @@ export class ProductsRoutes extends BaseRoutesConfig {
     this.app
       .route(`/products`)
       .get((req: express.Request, res: express.Response) => {
-        res.json(getManyProducts(1));
+        log("getManyProducts");
+        getManyProducts(req, res);
         //        res.status(200).send(`List of products`);
       })
       .post((req: express.Request, res: express.Response) => {
@@ -26,7 +30,9 @@ export class ProductsRoutes extends BaseRoutesConfig {
         next();
       })
       .get((req: express.Request, res: express.Response) => {
-        res.status(200).send(`GET requested for id ${req.params.productId}`);
+        log("getProduct");
+        getProduct(req, res);
+        //res.status(200).send(`GET requested for id ${req.params.productId}`);
       })
       .put((req: express.Request, res: express.Response) => {
         res.status(200).send(`PUT requested for id ${req.params.productId}`);

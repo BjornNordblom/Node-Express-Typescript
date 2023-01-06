@@ -4,7 +4,7 @@ import path from "path";
 import morgan from "morgan";
 import cors from "cors";
 import debug from "debug";
-const debugLog: debug.IDebugger = debug("app");
+const log: debug.IDebugger = debug(`app:${path.parse(__filename).name}`);
 
 const app = express();
 app.use(morgan("tiny")); // Logging
@@ -30,7 +30,7 @@ routes.push(new ProductsRoutes(app));
 const port = 3000;
 app.listen(port, () => {
   routes.forEach((route: BaseRoutesConfig) => {
-    debugLog(`Routes configured for ${route.getName()}`);
+    log(`Routes configured for ${route.getName()}`);
   });
 
   console.log(`\u2705 Server listening on port ${port}`);

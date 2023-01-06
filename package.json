@@ -2,10 +2,10 @@
   "name": "node-express-typescript-nodemon",
   "main": "dist/main.js",
   "scripts": {
-    "dev": "cross-env DEBUG=app,express:* npx nodemon ./main.ts",
+    "dev": "cross-env DEBUG=app:*,express:* npx nodemon ./main.ts",
     "build": "tsc",
     "preview": "tsc && node dist/main.js",
-    "debug": "cross-env DEBUG=* npm run dev",
+    "debug": "cross-env DEBUG=* npx nodemon ./main.ts",
     "lint": "npx eslint . --fix"
   },
   "dependencies": {
