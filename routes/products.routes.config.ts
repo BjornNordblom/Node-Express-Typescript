@@ -1,4 +1,5 @@
 import { BaseRoutesConfig } from "./base.routes.config";
+import { getManyProducts } from "../services/products.service";
 import express from "express";
 
 export class ProductsRoutes extends BaseRoutesConfig {
@@ -9,7 +10,8 @@ export class ProductsRoutes extends BaseRoutesConfig {
     this.app
       .route(`/products`)
       .get((req: express.Request, res: express.Response) => {
-        res.status(200).send(`List of products`);
+        res.json(getManyProducts(1));
+        //        res.status(200).send(`List of products`);
       })
       .post((req: express.Request, res: express.Response) => {
         res.status(200).send(`Post to products`);
