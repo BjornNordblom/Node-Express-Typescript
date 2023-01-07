@@ -1,6 +1,6 @@
 import { BaseRoutesConfig } from "./base.routes.config";
-import { getUser } from "../controllers/users.controller";
-
+import { createUser, createUserSchema, getUser, getManyUsers } from "../controllers/users.controller";
+import { check, validationResult } from "express-validator";
 import express from "express";
 
 export class UsersRoutes extends BaseRoutesConfig {
@@ -11,10 +11,18 @@ export class UsersRoutes extends BaseRoutesConfig {
     this.app
       .route(`/users`)
       .get((req: express.Request, res: express.Response) => {
-        res.status(200).send(`List of users`);
+        getManyUsers(req, res);
       })
-      .post((req: express.Request, res: express.Response) => {
-        res.status(200).send(`Post to users`);
+      .post(createUserSchema, (req: express.Request, res: express.Response) => {
+        const error = validationResult(req).formatWith(({ msg }) => msg);
+
+        const hasError = !error.isEmpty();
+
+        if (hasError) {
+          res.status(422).json({ error: error.array() });
+        } else {
+          createUser(req, res);
+        }
       });
 
     this.app
@@ -25,14 +33,16 @@ export class UsersRoutes extends BaseRoutesConfig {
         // it simply passes control to the next applicable function below using next()
         next();
       })
-      .get((req: express.Request, res: express.Response) => {
-        const userId = Number(req.params.userId) || 0;
-        if (userId > 0) {
-          res.json(getUser(userId));
+      .get(check("userId", "Invalid userId").isInt({ min: 0 }), (req: express.Request, res: express.Response) => {
+        const error = validationResult(req).formatWith(({ msg }) => msg);
+
+        const hasError = !error.isEmpty();
+
+        if (hasError) {
+          res.status(422).json({ error: error.array() });
         } else {
-          res.status(404).send(`User id not found`);
+          getUser(req, res);
         }
-        //        res.status(200).send(`GET requested for id ${req.params.userId}`);
       })
       .put((req: express.Request, res: express.Response) => {
         res.status(200).send(`PUT requested for id ${req.params.userId}`);

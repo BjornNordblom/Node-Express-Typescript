@@ -1,8 +1,8 @@
 export class User {
-  Id: number;
-  Name: string;
-  constructor(Id: number, Name: string) {
-    this.Id = Id;
-    this.Name = Name;
-  }
+  Id = 0;
+  Name = "";
+  //   constructor(Id: number, Name: string) {
+  //     this.Id = Id;
+  //     this.Name = Name;
+  //   }
 }

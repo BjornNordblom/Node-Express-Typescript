@@ -6,6 +6,7 @@ class Db {
   private db: sqlite.Database = new sqlite(path.resolve("main.db"), { fileMustExist: true });
 
   private constructor() {
+    this.db.pragma("journal_mode = WAL");
     return;
   }
 

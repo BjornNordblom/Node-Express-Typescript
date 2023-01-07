@@ -1,0 +1,18 @@
+// Get many
+GET http://localhost:3000/users HTTP/1.1
+
+###
+
+// Get one 
+GET http://localhost:3000/users/1 HTTP/1.1
+
+###
+
+// Create a user
+POST http://localhost:3000/users HTTP/1.1
+content-type: application/json
+
+{
+    "Username": "sample",
+    "Name": "sample"
+}

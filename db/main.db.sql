@@ -11,6 +11,21 @@ SELECT 'A chair','Three legs and a bit wobbly.', 10.99
 UNION ALL
 SELECT 'A table','No legs but very sturdy.', 19.80
 
+CREATE TABLE Users (
+  Id INTEGER PRIMARY KEY AUTOINCREMENT,
+  Username TEXT NOT NULL,
+  Name TEXT NOT NULL,
+  Password TEXT NOT NULL,
+  Salt TEXT NOT NULL,
+  Email TEXT NOT NULL,
+  Role TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+INSERT INTO Users (Username,Name,Password,Salt,Email,Role)
+SELECT 'John','John Doe','','','john@example.com','Admin'
+UNION ALL
+SELECT 'Common','Common Man','','','common@example.com','User';
 
 CREATE TABLE Quotes (
   Id INTEGER PRIMARY KEY AUTOINCREMENT,
